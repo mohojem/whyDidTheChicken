@@ -163,23 +163,125 @@ const CrossyRoadGame: React.FC = () => {
   const createPlayer = () => {
     const player = new THREE.Group();
 
+    // Body - white rounded body
     const body = new THREE.Mesh(
-      new THREE.BoxGeometry(15, 15, 20),
-      new THREE.MeshLambertMaterial({ color: "white", flatShading: true })
+      new THREE.BoxGeometry(18, 16, 18),
+      new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true })
     );
-    body.position.z = 10;
+    body.position.z = 12;
     body.castShadow = true;
     body.receiveShadow = true;
     player.add(body);
 
-    const cap = new THREE.Mesh(
-      new THREE.BoxGeometry(2, 4, 2),
-      new THREE.MeshLambertMaterial({ color: 0xf0619a, flatShading: true })
+    // Head
+    const head = new THREE.Mesh(
+      new THREE.BoxGeometry(12, 10, 14),
+      new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true })
     );
-    cap.position.z = 21;
-    cap.castShadow = true;
-    cap.receiveShadow = true;
-    player.add(cap);
+    head.position.z = 26;
+    head.position.y = 4;
+    head.castShadow = true;
+    head.receiveShadow = true;
+    player.add(head);
+
+    // Red comb (on top of head)
+    const comb = new THREE.Mesh(
+      new THREE.BoxGeometry(4, 6, 10),
+      new THREE.MeshLambertMaterial({ color: 0xe63946, flatShading: true })
+    );
+    comb.position.z = 35;
+    comb.position.y = 4;
+    comb.castShadow = true;
+    player.add(comb);
+
+    // Wattle (red hanging part under beak)
+    const wattle = new THREE.Mesh(
+      new THREE.BoxGeometry(3, 4, 5),
+      new THREE.MeshLambertMaterial({ color: 0xe63946, flatShading: true })
+    );
+    wattle.position.z = 20;
+    wattle.position.y = 8;
+    wattle.castShadow = true;
+    player.add(wattle);
+
+    // Beak (orange)
+    const beak = new THREE.Mesh(
+      new THREE.BoxGeometry(5, 8, 4),
+      new THREE.MeshLambertMaterial({ color: 0xffb703, flatShading: true })
+    );
+    beak.position.z = 26;
+    beak.position.y = 10;
+    beak.castShadow = true;
+    player.add(beak);
+
+    // Left eye
+    const leftEye = new THREE.Mesh(
+      new THREE.BoxGeometry(2, 2, 3),
+      new THREE.MeshLambertMaterial({ color: 0x1d1d1d, flatShading: true })
+    );
+    leftEye.position.z = 28;
+    leftEye.position.y = 6;
+    leftEye.position.x = -5;
+    player.add(leftEye);
+
+    // Right eye
+    const rightEye = new THREE.Mesh(
+      new THREE.BoxGeometry(2, 2, 3),
+      new THREE.MeshLambertMaterial({ color: 0x1d1d1d, flatShading: true })
+    );
+    rightEye.position.z = 28;
+    rightEye.position.y = 6;
+    rightEye.position.x = 5;
+    player.add(rightEye);
+
+    // Left leg
+    const leftLeg = new THREE.Mesh(
+      new THREE.BoxGeometry(3, 3, 6),
+      new THREE.MeshLambertMaterial({ color: 0xffb703, flatShading: true })
+    );
+    leftLeg.position.z = 3;
+    leftLeg.position.x = -5;
+    player.add(leftLeg);
+
+    // Right leg
+    const rightLeg = new THREE.Mesh(
+      new THREE.BoxGeometry(3, 3, 6),
+      new THREE.MeshLambertMaterial({ color: 0xffb703, flatShading: true })
+    );
+    rightLeg.position.z = 3;
+    rightLeg.position.x = 5;
+    player.add(rightLeg);
+
+    // Tail feathers
+    const tailFeathers = new THREE.Mesh(
+      new THREE.BoxGeometry(10, 8, 16),
+      new THREE.MeshLambertMaterial({ color: 0x2d6a4f, flatShading: true })
+    );
+    tailFeathers.position.z = 18;
+    tailFeathers.position.y = -10;
+    tailFeathers.rotation.x = -0.3;
+    tailFeathers.castShadow = true;
+    player.add(tailFeathers);
+
+    // Wing left
+    const wingLeft = new THREE.Mesh(
+      new THREE.BoxGeometry(4, 10, 10),
+      new THREE.MeshLambertMaterial({ color: 0xf0f0f0, flatShading: true })
+    );
+    wingLeft.position.z = 12;
+    wingLeft.position.x = -10;
+    wingLeft.castShadow = true;
+    player.add(wingLeft);
+
+    // Wing right
+    const wingRight = new THREE.Mesh(
+      new THREE.BoxGeometry(4, 10, 10),
+      new THREE.MeshLambertMaterial({ color: 0xf0f0f0, flatShading: true })
+    );
+    wingRight.position.z = 12;
+    wingRight.position.x = 10;
+    wingRight.castShadow = true;
+    player.add(wingRight);
 
     const playerContainer = new THREE.Group();
     playerContainer.add(player);
