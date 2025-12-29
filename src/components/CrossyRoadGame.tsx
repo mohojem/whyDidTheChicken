@@ -339,7 +339,7 @@ const CrossyRoadGame: React.FC = () => {
     return road;
   };
 
-  const createTree = (tileIndex: number, height: number) => {
+  const createTree = (tileIndex: number, height: number, hasFlowers?: boolean, flowerCount?: number) => {
     const tree = new THREE.Group();
     tree.position.x = tileIndex * tileSize;
 
@@ -359,8 +359,8 @@ const CrossyRoadGame: React.FC = () => {
     crown.receiveShadow = true;
     tree.add(crown);
 
-    // Add pink flowers to some trees (40% chance)
-    if (Math.random() < 0.4) {
+    // Add pink flowers if specified
+    if (hasFlowers && flowerCount) {
       const flowerPositions = [
         { x: 12, y: 10, z: height + 18 },
         { x: -10, y: 12, z: height + 15 },
@@ -369,8 +369,7 @@ const CrossyRoadGame: React.FC = () => {
         { x: 0, y: 14, z: height + 22 },
       ];
       
-      const numFlowers = Math.floor(Math.random() * 3) + 2; // 2-4 flowers
-      for (let i = 0; i < numFlowers; i++) {
+      for (let i = 0; i < flowerCount; i++) {
         const pos = flowerPositions[i];
         const flower = new THREE.Mesh(
           new THREE.BoxGeometry(5, 5, 5),
@@ -416,7 +415,9 @@ const CrossyRoadGame: React.FC = () => {
       occupiedTiles.add(tileIndex);
 
       const height = randomElement([20, 45, 60]);
-      return { tileIndex, height };
+      const hasFlowers = Math.random() < 0.4;
+      const flowerCount = hasFlowers ? Math.floor(Math.random() * 3) + 2 : 0;
+      return { tileIndex, height, hasFlowers, flowerCount };
     });
 
     return { type: "forest", trees };
@@ -544,8 +545,8 @@ const CrossyRoadGame: React.FC = () => {
 
       if (rowData.type === "forest") {
         const row = createGrass(rowIndex);
-        rowData.trees.forEach(({ tileIndex, height }: any) => {
-          const tree = createTree(tileIndex, height);
+        rowData.trees.forEach(({ tileIndex, height, hasFlowers, flowerCount }: any) => {
+          const tree = createTree(tileIndex, height, hasFlowers, flowerCount);
           row.add(tree);
         });
         mapRef.current?.add(row);
@@ -711,8 +712,15 @@ const CrossyRoadGame: React.FC = () => {
     }
   };
 
+  const gameOverRef = useRef(false);
+  
+  // Keep ref in sync with state
+  useEffect(() => {
+    gameOverRef.current = gameOver;
+  }, [gameOver]);
+
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (gameOver) return;
+    if (gameOverRef.current) return;
     
     if (event.key === "ArrowUp") {
       event.preventDefault();
@@ -733,7 +741,7 @@ const CrossyRoadGame: React.FC = () => {
   const handleControlPress = (direction: string) => (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!gameOver) {
+    if (!gameOverRef.current) {
       queueMove(direction);
     }
   };
