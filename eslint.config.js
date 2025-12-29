@@ -1,3 +1,9 @@
+/**
+ * ESLint Configuration
+ * 
+ * This project uses the flat config format (eslint.config.js).
+ * Configured for React + TypeScript with recommended rules.
+ */
 import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -20,6 +26,7 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      // Disabled to allow flexible development patterns
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
