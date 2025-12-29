@@ -707,6 +707,15 @@ const CrossyRoadGame: React.FC = () => {
     }
   };
 
+  // Handle touch/click for mobile controls with proper event handling
+  const handleControlPress = (direction: string) => (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!gameOver) {
+      queueMove(direction);
+    }
+  };
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -789,10 +798,42 @@ const CrossyRoadGame: React.FC = () => {
       
       <div className="controls">
         <div className="controls-grid">
-          <button className="control-button forward" onClick={() => !gameOver && queueMove("forward")}>▲</button>
-          <button className="control-button left" onClick={() => !gameOver && queueMove("left")}>◀</button>
-          <button className="control-button backward" onClick={() => !gameOver && queueMove("backward")}>▼</button>
-          <button className="control-button right" onClick={() => !gameOver && queueMove("right")}>▶</button>
+          <button 
+            className="control-button forward" 
+            onTouchStart={handleControlPress("forward")}
+            onClick={handleControlPress("forward")}
+            aria-label="Move forward"
+            type="button"
+          >
+            ▲
+          </button>
+          <button 
+            className="control-button left" 
+            onTouchStart={handleControlPress("left")}
+            onClick={handleControlPress("left")}
+            aria-label="Move left"
+            type="button"
+          >
+            ◀
+          </button>
+          <button 
+            className="control-button backward" 
+            onTouchStart={handleControlPress("backward")}
+            onClick={handleControlPress("backward")}
+            aria-label="Move backward"
+            type="button"
+          >
+            ▼
+          </button>
+          <button 
+            className="control-button right" 
+            onTouchStart={handleControlPress("right")}
+            onClick={handleControlPress("right")}
+            aria-label="Move right"
+            type="button"
+          >
+            ▶
+          </button>
         </div>
       </div>
       

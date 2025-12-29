@@ -121,17 +121,36 @@
   }
 
   .controls-grid {
-    @apply grid gap-2.5;
-    grid-template-columns: 50px 50px 50px;
+    @apply grid gap-2 sm:gap-2.5;
+    grid-template-columns: 56px 56px 56px;
+  }
+
+  @media (min-width: 640px) {
+    .controls-grid {
+      grid-template-columns: 60px 60px 60px;
+    }
   }
 
   .control-button {
-    @apply w-full h-10 cursor-pointer outline-none;
+    @apply w-full cursor-pointer outline-none select-none;
+    height: 48px;
+    min-height: 44px;
+    font-size: 1.25rem;
     background-color: hsl(var(--game-button));
     border: 1px solid hsl(var(--border));
     box-shadow: 3px 5px 0px 0px hsl(var(--game-button-shadow) / 0.75);
     font-family: inherit;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  @media (min-width: 640px) {
+    .control-button {
+      height: 52px;
+      font-size: 1.5rem;
+    }
   }
 
   .control-button:hover {
@@ -149,7 +168,7 @@
   }
 
   .score-display {
-    @apply absolute top-5 left-5 text-3xl z-10;
+    @apply absolute top-3 left-3 text-xl sm:top-5 sm:left-5 sm:text-3xl z-10;
     color: hsl(var(--game-score));
     text-shadow: 2px 2px 4px hsl(var(--game-button-shadow) / 0.5);
     font-family: "Press Start 2P", cursive;
@@ -169,20 +188,21 @@
   }
 
   .result-card {
-    @apply flex flex-col items-center p-8 rounded-lg;
+    @apply flex flex-col items-center p-5 sm:p-8 rounded-lg mx-4;
+    max-width: 90vw;
     background-color: hsl(var(--game-card));
     box-shadow: 0 10px 40px hsl(var(--game-button-shadow) / 0.3);
     animation: scale-in 0.3s ease-out;
   }
 
   .result-title {
-    @apply text-2xl mb-4;
+    @apply text-lg sm:text-2xl mb-3 sm:mb-4 text-center;
     color: hsl(var(--game-retry));
     font-family: "Press Start 2P", cursive;
   }
 
   .result-score {
-    @apply text-sm mb-6;
+    @apply text-xs sm:text-sm mb-4 sm:mb-6 text-center;
     color: hsl(var(--card-foreground));
     font-family: "Press Start 2P", cursive;
   }
@@ -193,12 +213,15 @@
   }
 
   .retry-button {
-    @apply px-12 py-5 border-none cursor-pointer;
+    @apply px-8 py-4 sm:px-12 sm:py-5 border-none cursor-pointer;
+    min-height: 44px;
     background-color: hsl(var(--game-retry));
     color: hsl(var(--primary-foreground));
     font-family: "Press Start 2P", cursive;
     font-size: inherit;
     transition: background-color 0.2s ease, transform 0.1s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .retry-button:hover {
