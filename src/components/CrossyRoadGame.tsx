@@ -359,6 +359,28 @@ const CrossyRoadGame: React.FC = () => {
     crown.receiveShadow = true;
     tree.add(crown);
 
+    // Add pink flowers to some trees (40% chance)
+    if (Math.random() < 0.4) {
+      const flowerPositions = [
+        { x: 12, y: 10, z: height + 18 },
+        { x: -10, y: 12, z: height + 15 },
+        { x: 8, y: -11, z: height + 20 },
+        { x: -12, y: -8, z: height + 12 },
+        { x: 0, y: 14, z: height + 22 },
+      ];
+      
+      const numFlowers = Math.floor(Math.random() * 3) + 2; // 2-4 flowers
+      for (let i = 0; i < numFlowers; i++) {
+        const pos = flowerPositions[i];
+        const flower = new THREE.Mesh(
+          new THREE.BoxGeometry(5, 5, 5),
+          new THREE.MeshLambertMaterial({ color: 0xff69b4, flatShading: true })
+        );
+        flower.position.set(pos.x, pos.y, pos.z);
+        tree.add(flower);
+      }
+    }
+
     return tree;
   };
 
